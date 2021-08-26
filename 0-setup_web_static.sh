@@ -19,9 +19,8 @@ sudo echo "<html>
 # Create a symbolic link to the /data/web_static/releases/test/ folder
 sudo ln -sf /data/web_static/releases/test/ /data/web_static/current
 # Give ownership of the /data/ folder to the ubuntu user AND group
-sudo chown -R ubuntu:ubuntu /data/
+sudo chown -R ubuntu:ubuntu /data
 # Update the Nginx configuration to serve the content of /data/web_static/current/ to hbnb_static
-sudo sed -i '/listen 80 default_server;/a location /hbtn_static/ { alias /data/web_static/current/;}' /etc/nginx/sites-available/default
+sudo sed -i '53i \\tlocation \/hbnb_static {\n\t\t alias /data/web_static/current;\n\t}' /etc/nginx/sites-available/default
 # Restart nginx
 sudo service nginx restart
-exit 0
