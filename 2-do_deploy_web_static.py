@@ -3,7 +3,7 @@
 Fabric script that generates a .tgz archive from the contents of the web_static
 folder and distributes an archive to the web servers
 '''
-from fabric.api import local, run
+from fabric.api import *
 from datetime import datetime
 from os import path
 env.hosts = ['34.138.154.248', '35.227.26.227']
@@ -30,7 +30,7 @@ def do_pack():
 
 def do_deploy(archive_path):
     ''' Function that distributes an archive to the web servers '''
-    file_name = archive_path[9:-4]
+    file_n = archive_path[9:-4]
 
     if path.exists(archive_path) is False:
         return False
@@ -40,19 +40,18 @@ def do_deploy(archive_path):
         put(archive_path, '/tmp/')
 
         # Uncompress the archive on the web server
-        run('sudo mkdir -p /data/web_static/releases/{}/'.format(file_name))
-        run('sudo tar -xzf /tmp/{}.tgz -C data/web_static/\
-            releases/{}/'.format(file_name, file_name))
+        run('sudo mkdir -p /data/web_static/releases/{}/'.format(file_n))
+        pth = '/data/web_static/releases/{}/'.format(file_n)
+        run('sudo tar -xzf /tmp/{}.tgz -C '.format(file_n) + pth)
 
         # Delete the archive from the web server
-        run('sudo rm /tmp/{}.tgz'.format(file_name))
+        run('sudo rm /tmp/{}.tgz'.format(file_n))
 
         # Delete the symlink from the server
-        run('sudo unlink /data/web_static/current')
+        run('sudo rm -rf /data/web_static/current')
 
         # Create a new symlink on the server
-        run('sudo ln -sf /data/web_static/releases/{}/ /data/web_static/\
-            current'.format(file_name))
+        run('sudo ln -sf ' + pth + ' /data/web_static/current')
 
         return True
 
