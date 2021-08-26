@@ -47,6 +47,12 @@ def do_deploy(archive_path):
         # Delete the archive from the web server
         run('sudo rm /tmp/{}.tgz'.format(file_n))
 
+        # Move data
+        # run('sudo mv ' + pth + 'web_static/* ' + pth)
+
+        # Delete old path
+        run('sudo rm -rf ' + pth + 'web_static')
+
         # Delete the symlink from the server
         run('sudo rm -rf /data/web_static/current')
 
