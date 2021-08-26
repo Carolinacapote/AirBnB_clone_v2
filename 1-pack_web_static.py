@@ -18,7 +18,7 @@ def do_pack():
 
     # Generates the .tgz archive
     try:
-        tar_file = local('tar -cvzf {} web_static/'.format(archive))
+        tar_file = local('tar -cvzf {} web_static/'.format(archive_path))
         return archive_path
     except:
         return None
