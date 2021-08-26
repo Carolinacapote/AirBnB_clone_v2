@@ -59,7 +59,7 @@ def do_deploy(archive_path):
         # Create a new symlink on the server
         run('sudo ln -sf ' + pth + ' /data/web_static/current')
 
-        return True
-
     except:
         return False
+
+    return True
