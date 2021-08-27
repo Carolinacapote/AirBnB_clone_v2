@@ -8,7 +8,6 @@ from datetime import datetime
 from os import path
 env.hosts = ['34.138.154.248', '35.227.26.227']
 env.user = 'ubuntu'
-env.key_filename = '~/.ssh/id_rsa'
 
 
 def do_pack():
@@ -30,13 +29,9 @@ def do_pack():
 
 def do_deploy(archive_path):
     ''' Function that distributes an archive to the web servers '''
-    file_n = archive_path[9:-4]
-
-    if path.exists(archive_path) is False:
-        return False
-
-    try:
+    if path.exists(archive_path):
         # Upload the archive to the /tmp/
+        file_n = archive_path[9:-4]
         put(archive_path, '/tmp/')
 
         # Uncompress the archive on the web server
@@ -48,7 +43,7 @@ def do_deploy(archive_path):
         run('sudo rm /tmp/{}.tgz'.format(file_n))
 
         # Move data
-        # run('sudo mv ' + pth + 'web_static/* ' + pth)
+        run('sudo mv ' + pth + 'web_static/* ' + pth)
 
         # Delete old path
         run('sudo rm -rf ' + pth + 'web_static')
@@ -57,16 +52,15 @@ def do_deploy(archive_path):
         run('sudo rm -rf /data/web_static/current')
 
         # Create a new symlink on the server
-        run('sudo ln -sf ' + pth + ' /data/web_static/current')
+        run('sudo ln -s ' + pth + ' /data/web_static/current')
 
+        print('New version deployed!')
         return True
 
-    except:
-        return False
+    return False
 
 
 def deploy():
     ''' Function that creates and distributes an archive to your web servers
     calling do_pack() and do_deploy() '''
-    # call do_deploy()
     return do_deploy(do_pack())
