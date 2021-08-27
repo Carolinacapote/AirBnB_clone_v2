@@ -8,7 +8,6 @@ from datetime import datetime
 from os import path
 env.hosts = ['34.138.154.248', '35.227.26.227']
 env.user = 'ubuntu'
-env.key_filename = '~/.ssh/id_rsa'
 
 
 def do_pack():
@@ -57,7 +56,7 @@ def do_deploy(archive_path):
         run('sudo rm -rf /data/web_static/current')
 
         # Create a new symlink on the server
-        run('sudo ln -sf ' + pth + ' /data/web_static/current')
+        run('sudo ln -s ' + pth + ' /data/web_static/current')
 
     except:
         return False
