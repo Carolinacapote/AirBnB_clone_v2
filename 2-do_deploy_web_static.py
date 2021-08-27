@@ -31,10 +31,7 @@ def do_deploy(archive_path):
     ''' Function that distributes an archive to the web servers '''
     file_n = archive_path[9:-4]
 
-    if path.exists(archive_path) is False:
-        return False
-
-    try:
+    if path.exists(archive_path):
         # Upload the archive to the /tmp/
         put(archive_path, '/tmp/')
 
@@ -47,7 +44,7 @@ def do_deploy(archive_path):
         run('sudo rm /tmp/{}.tgz'.format(file_n))
 
         # Move data
-        # run('sudo mv ' + pth + 'web_static/* ' + pth)
+        run('sudo mv ' + pth + 'web_static/* ' + pth)
 
         # Delete old path
         run('sudo rm -rf ' + pth + 'web_static')
@@ -58,7 +55,7 @@ def do_deploy(archive_path):
         # Create a new symlink on the server
         run('sudo ln -s ' + pth + ' /data/web_static/current')
 
-    except:
-        return False
+        print('New version deployed!')
+        return True
 
-    return True
+    return False
