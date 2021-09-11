@@ -34,9 +34,9 @@ def python_text(text='is cool'):
 
 
 @app.route('/number/<int:n>', strict_slashes=False)
-def is_int(text):
+def is_int(n):
     """Return a string as a content"""
-    if isinstance(n, int):
+    if type(n) == int:
         return '{} is a number'.format(n)
 
 if __name__ == '__main__':
