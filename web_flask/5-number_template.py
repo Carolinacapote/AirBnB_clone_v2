@@ -10,7 +10,7 @@ app = Flask(__name__)
 def index():
     """Return a string as a content"""
     return 'Hello HBNB!'
-    
+
 
 @app.route('/hbnb', strict_slashes=False)
 def hbnb():
