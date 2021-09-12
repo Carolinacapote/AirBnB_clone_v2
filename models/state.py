@@ -21,7 +21,8 @@ class State(BaseModel, Base):
          def cities(self):
              """ Getter cities """
              list_city = []
-             for city in list(models.storage.all(City).values()):
+             cities = storage.all(City)
+             for city in cities.values():
                  if self.id == city.state_id:
                      list_city.append(city)
              return list_city
