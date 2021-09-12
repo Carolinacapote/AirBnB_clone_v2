@@ -17,12 +17,12 @@ class State(BaseModel, Base):
         cities = relationship('City', back_populates='state')
 
     else:
-         @property
-         def cities(self):
-             """ Getter cities """
-             list_city = []
-             cities = storage.all(City)
-             for city in cities.values():
-                 if self.id == city.state_id:
-                     list_city.append(city)
-             return list_city
+        @property
+        def cities(self):
+            """ Getter cities """
+            list_city = []
+            cities = storage.all(City)
+            for city in cities.values():
+                if self.id == city.state_id:
+                    list_city.append(city)
+            return list_city
