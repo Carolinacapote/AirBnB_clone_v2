@@ -9,8 +9,13 @@ app = Flask(__name__)
 
 
 @app.route('/states', strict_slashes=False)
+def index():
+    """Displays a template with a list of cities of a specific state"""
+    states = storage.all(State)
+    return render_template('7-states_list.html', states=states)
+
 @app.route('/states/<id>', strict_slashes=False)
-def state_by_id(id=None):
+def state_by_id(id):
     """Displays a State if one is found with this id"""
     states = storage.all(State)
 
@@ -20,8 +25,6 @@ def state_by_id(id=None):
 
         else:
             return render_template('9-states.html', state=None, id=id)
-
-    return render_template('9-states.html', states=states, id=id)
 
 
 @app.teardown_appcontext
