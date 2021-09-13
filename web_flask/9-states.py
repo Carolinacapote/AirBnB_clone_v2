@@ -14,6 +14,7 @@ def index():
     states = storage.all(State)
     return render_template('7-states_list.html', states=states)
 
+
 @app.route('/states/<id>', strict_slashes=False)
 def state_by_id(id):
     """Displays a State if one is found with this id"""
