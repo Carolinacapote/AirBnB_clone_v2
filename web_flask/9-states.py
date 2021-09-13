@@ -21,7 +21,7 @@ def state_by_id(id):
 
     for state in states.values():
         if state.id == id:
-            return  render_template('9-states.html', state=state, id=id)
+            return render_template('9-states.html', state=state, id=id)
 
         else:
             return render_template('9-states.html', state=None, id=id)
